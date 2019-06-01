@@ -5,21 +5,18 @@ import (
 )
 
 type GetRequest struct {
-	CommentId int64
+	ContentId int64
 }
 type GetResponse struct {
-	Comment *Comment
+	Content *Content
 }
 
 type ListRequest struct {
-	Query    string
 	Page     int32
 	PageSize int32
-	// Receiver interface{}
-	Values []interface{}
 }
 type ListResponse struct {
-	List     []*Comment
+	List     []*Content
 	Page     int32
 	PageSize int32
 	Total    int64
@@ -27,28 +24,43 @@ type ListResponse struct {
 
 type CreateRequest struct {
 	AppId   string
-	Comment CommentParams
+	Title   string
+	Description *string
+	AuthorID int64
+	Category *string
+	Type     *ContentType
+	Body     string
+	BodyType *ContentBodyType
+	Extra    map[string]interface{}
+
 }
 type CreateResponse struct {
 	AppId   string
-	Comment *Comment
+	Content *Content
 }
 
 type DeleteRequest struct {
-	CommentId int64
+	ContentId int64
 }
 
 type DeleteResponse struct {
-	CommentId int64
+	ContentId int64
 }
 
 type UpdateRequest struct {
-	CommentId int64
-	Map       map[string]interface{}
+	ContentId int64
+	Title *string
+	Description *string
+	Category *string
+	State *ContentState
+	Type *ContentType
+	Body *string
+	BodyType *ContentBodyType
+	Extra *string
 }
 
 type UpdateResponse struct {
-	Comment *Comment
+	Content *Content
 }
 
 type Repo interface {

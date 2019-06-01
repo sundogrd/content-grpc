@@ -4,17 +4,17 @@ import (
 	"context"
 	"testing"
 
-	repo "github.com/sundogrd/comment-grpc/providers/repos/comment"
+	repo "github.com/sundogrd/content-grpc/providers/repos/content"
 )
 
 func TestCommentProvider_Delete(t *testing.T) {
-	comment, err := initTestDB()
+	gormDB, err := initTestDB()
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	res, err := comment.Delete(context.Background(), &repo.DeleteRequest{
-		CommentId: 343193762765221888,
+	res, err := gormDB.Delete(context.Background(), &repo.DeleteRequest{
+		ContentId: 343193762765221888,
 	})
 	if err != nil {
 		t.Fatalf("DeleteComment err: %+v", err)

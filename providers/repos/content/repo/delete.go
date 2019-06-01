@@ -2,25 +2,26 @@ package repo
 
 import (
 	"context"
-	"fmt"
+	"github.com/sirupsen/logrus"
 
-	repo "github.com/sundogrd/comment-grpc/providers/repos/comment"
+	repo "github.com/sundogrd/content-grpc/providers/repos/content"
 )
 
-func (s commentRepo) Delete(ctx context.Context, req *repo.DeleteRequest) (*repo.DeleteResponse, error) {
-	db := s.gormDB
+func (r contentRepo) Delete(ctx context.Context, req *repo.DeleteRequest) (*repo.DeleteResponse, error) {
+	db := r.gormDB
 
-	dbc := db.Delete(repo.Comment{
-		ID: req.CommentId,
-	})
+	var content repo.Content
+	db.Where("content_id = ?", req.ContentId).First(&content)
 
-	if dbc.Error != nil {
-		fmt.Printf("[providers/comment] Delete: db delete error: %+v", dbc.Error)
+	content.State = repo.STATE_DELETED
+
+	if dbc := db.Save(&content); dbc.Error != nil {
+		logrus.Errorf("[providers/comment] Delete: db delete error: %+v", dbc.Error)
 		return nil, dbc.Error
 	}
 
 	res := &repo.DeleteResponse{
-		CommentId: req.CommentId,
+		ContentId: req.ContentId,
 	}
 
 	return res, nil

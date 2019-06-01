@@ -2,35 +2,36 @@ package repo
 
 import (
 	"context"
-	"fmt"
-
-	repo "github.com/sundogrd/comment-grpc/providers/repos/comment"
+	"errors"
+	repo "github.com/sundogrd/content-grpc/providers/repos/content"
 )
 
-func (s commentRepo) Update(ctx context.Context, req *repo.UpdateRequest) (*repo.UpdateResponse, error) {
+func (r contentRepo) Update(ctx context.Context, req *repo.UpdateRequest) (*repo.UpdateResponse, error) {
 
-	db := s.gormDB
+	//db := r.gormDB
 
-	dbc := db.Model(&repo.Comment{}).Where("id = ?", req.CommentId).Update(req.Map)
+	//dbc := db.Model(&repo.Content{}).Where("id = ?", req.ContentId).Update(req.Map)
+	//
+	//if dbc.Error != nil {
+	//	fmt.Printf("[providers/comment] Update: db update error: %+v", dbc.Error)
+	//	return nil, dbc.Error
+	//}
+	//
+	//response, err := r.Get(ctx, &repo.GetRequest{
+	//	ContentId: req.ContentId,
+	//})
+	//
+	//if err != nil {
+	//	fmt.Printf("[providers/comment] Update: db get comment after update error: %+v", err)
+	//	return nil, err
+	//}
+	//
+	//res := &repo.UpdateResponse{
+	//	Comment: response.Comment,
+	//}
 
-	if dbc.Error != nil {
-		fmt.Printf("[providers/comment] Update: db update error: %+v", dbc.Error)
-		return nil, dbc.Error
-	}
+	//return res, nil
 
-	response, err := s.Get(ctx, &repo.GetRequest{
-		CommentId: req.CommentId,
-	})
-
-	if err != nil {
-		fmt.Printf("[providers/comment] Update: db get comment after update error: %+v", err)
-		return nil, err
-	}
-
-	res := &repo.UpdateResponse{
-		Comment: response.Comment,
-	}
-
-	return res, nil
+	return nil, errors.New("not implemented")
 
 }

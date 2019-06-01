@@ -2,30 +2,30 @@ package repo
 
 import (
 	"context"
-	"fmt"
+	"github.com/sirupsen/logrus"
 
-	repo "github.com/sundogrd/comment-grpc/providers/repos/comment"
+	repo "github.com/sundogrd/content-grpc/providers/repos/content"
 )
 
-func (s commentRepo) Get(ctx context.Context, req *repo.GetRequest) (*repo.GetResponse, error) {
+func (r contentRepo) Get(ctx context.Context, req *repo.GetRequest) (*repo.GetResponse, error) {
 
-	var comment repo.Comment
-	db := s.gormDB
+	var content repo.Content
+	db := r.gormDB
 
-	dbc := db.Where(repo.Comment{
-		ID: req.CommentId,
-	}).First(&comment)
+	dbc := db.Where(repo.Content{
+		ID: req.ContentId,
+	}).First(&content)
 
 	if dbc.Error != nil {
-		fmt.Printf("[providers/comment] Delete: db get error: %+v", dbc.Error)
+		logrus.Errorf("[providers/content] Delete: db get error: %+v", dbc.Error)
 		return nil, dbc.Error
 	}
 
 	res := &repo.GetResponse{
-		Comment: &comment,
+		Content: &content,
 	}
 
-	if res.Comment.ID == 0 {
+	if res.Content.ID == 0 {
 		return nil, nil
 	}
 

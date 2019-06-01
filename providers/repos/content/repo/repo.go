@@ -8,14 +8,14 @@ import (
 	"github.com/zheng-ji/goSnowFlake"
 )
 
-type commentRepo struct {
+type contentRepo struct {
 	gormDB         *gorm.DB
 	contextTimeout time.Duration
 	idBuilder      *goSnowFlake.IdWorker
 }
 
 // NewUserService will create new an articleUsecase object representation of article.Usecase interface
-func NewCommentRepo(gormDB *gorm.DB, timeout time.Duration) (comment.Repo, error) {
+func NewContentRepo(gormDB *gorm.DB, timeout time.Duration) (comment.Repo, error) {
 	idBuilder, err := goSnowFlake.NewIdWorker(3)
 	if err != nil {
 		return nil, err
@@ -28,7 +28,7 @@ func NewCommentRepo(gormDB *gorm.DB, timeout time.Duration) (comment.Repo, error
 		gormDB.AutoMigrate(&comment.Comment{})
 	}
 
-	repo := commentRepo{
+	repo := contentRepo{
 		gormDB:         gormDB,
 		contextTimeout: timeout,
 		idBuilder:      idBuilder,

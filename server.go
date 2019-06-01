@@ -5,10 +5,11 @@ import (
 	"net"
 	"time"
 
-	configUtils "github.com/sundogrd/gopkg/config"
-	grpcUtils "github.com/sundogrd/gopkg/grpc"
 	contentGen "github.com/sundogrd/content-grpc/grpc_gen/content"
 	"github.com/sundogrd/content-grpc/servers/content"
+	configUtils "github.com/sundogrd/gopkg/config"
+	dbUtils "github.com/sundogrd/gopkg/db"
+	grpcUtils "github.com/sundogrd/gopkg/grpc"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )
@@ -27,7 +28,7 @@ func main() {
 		panic(err)
 	}
 
-	gormDB, err := db.Connect(db.ConnectOptions{
+	gormDB, err := dbUtils.Connect(dbUtils.ConnectOptions{
 		User:           config.Get("db.options.user").(string),
 		Password:       config.Get("db.options.password").(string),
 		Host:           config.Get("db.options.host").(string),
@@ -35,6 +36,7 @@ func main() {
 		DBName:         config.Get("db.options.dbname").(string),
 		ConnectTimeout: config.Get("db.options.connectTimeout").(string),
 	})
+
 	if err != nil {
 		logrus.Errorf("[search-grpc] db.Connect err: %s", err.Error())
 		panic(err)
@@ -57,7 +59,7 @@ func main() {
 	logrus.Printf("[search-grpc] ResgiterServer finished, service: %s, %s", "sundog.search", instanceAddr)
 
 	contentGen.RegisterContentServiceServer(grpcServer, &content.ContentServiceServer{
-		GormDB:              gormDB,
+		GormDB: gormDB,
 	})
 	reflection.Register(grpcServer)
 	grpcServer.Serve(listen)

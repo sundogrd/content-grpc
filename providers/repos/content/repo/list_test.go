@@ -4,21 +4,17 @@ import (
 	"context"
 	"testing"
 
-	repo "github.com/sundogrd/comment-grpc/providers/repos/comment"
+	repo "github.com/sundogrd/content-grpc/providers/repos/content"
 )
 
 func TestCommentProvider_List(t *testing.T) {
-	comment, err := initTestDB()
+	gormDB, err := initTestDB()
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	var values []interface{}
+	res, err := gormDB.List(context.Background(), &repo.ListRequest{
 
-	values = append(values, 232)
-	res, err := comment.List(context.Background(), &repo.ListRequest{
-		Query:  "SELECT * FROM sd_comments WHERE target_id = ?",
-		Values: values,
 	})
 	if err != nil {
 		t.Fatalf("ListComment err: %+v", err)

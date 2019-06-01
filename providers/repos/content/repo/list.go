@@ -2,46 +2,56 @@ package repo
 
 import (
 	"context"
-	"fmt"
+	"errors"
 
-	repo "github.com/sundogrd/comment-grpc/providers/repos/comment"
+	repo "github.com/sundogrd/content-grpc/providers/repos/content"
 )
 
-func (s commentRepo) List(ctx context.Context, req *repo.ListRequest) (*repo.ListResponse, error) {
+func (s contentRepo) List(ctx context.Context, req *repo.ListRequest) (*repo.ListResponse, error) {
+	//var page int16 = 1
+	//var pageSize int16 = 10
+	//if req.Page != nil {
+	//	page = *req.Page
+	//}
+	//if req.PageSize != nil {
+	//	pageSize = *req.PageSize
+	//}
+	//
+	//contents := make([]SDContent, 0)
+	//count := int64(0)
+	//
+	//db := cs.db
+	//if req.ContentIDs != nil && len(*req.ContentIDs) != 0 {
+	//	db = db.Where("content_id in (?)", *req.ContentIDs)
+	//}
+	//if req.Title != nil {
+	//	db = db.Where("title LIKE ?", "%"+*req.Title+"%")
+	//}
+	//if req.AuthorID != nil {
+	//	db = db.Where("author_id = ", *req.AuthorID)
+	//}
+	//if req.Type != nil {
+	//	db = db.Where("type = ?", *req.Type)
+	//}
+	//if req.Status != nil {
+	//	db = db.Where("status = ?", *req.Status)
+	//}
+	//db.Limit(pageSize).Offset((page - 1) * (pageSize))
+	//if err := db.Find(&contents).Offset(0).Limit(-1).Count(&count).Error; err != nil {
+	//	return nil, err
+	//} else {
+	//	BaseInfos := make([]BaseInfo, 0)
+	//	for _, v := range contents {
+	//		BaseInfos = append(BaseInfos, packBaseInfo(v))
+	//	}
+	//	res := &FindResponse{
+	//		List:  BaseInfos,
+	//		Total: count,
+	//	}
+	//	return res, nil
+	//}
 
-	var result []*repo.Comment
-	db := s.gormDB
-	page := req.Page
-	pageSize := req.PageSize
+	//return res, nil
 
-	rows, err := db.Raw(req.Query, req.Values...).Rows()
-	defer rows.Close()
-
-	if page > 0 && pageSize > 0 {
-		db.Limit(pageSize).Offset((page - 1) * pageSize)
-	}
-
-	if err != nil {
-		fmt.Printf("[providers/comment] List: db scan rows error: %+v", err)
-		return nil, err
-	}
-
-	for rows.Next() {
-		var commentObj repo.Comment
-
-		if rowErr := db.ScanRows(rows, &commentObj); rowErr != nil {
-			fmt.Printf("[providers/comment] List: db scan row error: %+v", rowErr)
-		}
-		result = append(result, &commentObj)
-	}
-
-	res := &repo.ListResponse{
-		List:     result,
-		Page:     page,
-		PageSize: pageSize,
-		Total:    int64(len(result)),
-	}
-
-	return res, nil
-
+	return nil, errors.New("not implemented")
 }

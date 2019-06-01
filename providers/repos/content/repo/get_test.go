@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	repo "github.com/sundogrd/comment-grpc/providers/repos/comment"
+	repo "github.com/sundogrd/content-grpc/providers/repos/content"
 )
 
 func TestCommentProvider_Get(t *testing.T) {
@@ -14,7 +14,7 @@ func TestCommentProvider_Get(t *testing.T) {
 	}
 
 	res, err := comment.Get(context.Background(), &repo.GetRequest{
-		CommentId: 343087411107999744,
+		ContentId: 343087411107999744,
 	})
 	if err != nil {
 		t.Fatalf("GetComment err: %+v", err)

@@ -1,21 +1,29 @@
 package service
 
 import (
+	"github.com/sundogrd/content-grpc/services/content"
+	"github.com/zheng-ji/goSnowFlake"
 	"time"
 
-	commentRepo "github.com/sundogrd/comment-grpc/providers/repos/comment"
-	"github.com/sundogrd/comment-grpc/services/comment"
+	contentRepo "github.com/sundogrd/content-grpc/providers/repos/content"
 )
 
-type commentService struct {
-	commentRepo    *commentRepo.Repo
+type contentService struct {
+	contentRepo    contentRepo.Repo
 	contextTimeout time.Duration
+	idBuilder *goSnowFlake.IdWorker
+	content.Service
 }
 
 // NewCommentService will create new an articleUsecase object representation of article.Usecase interface
-func NewCommentService(commentRepo *commentRepo.Repo, timeout time.Duration) (comment.Service, error) {
-	return &commentService{
-		commentRepo:    commentRepo,
+func NewContentService(contentRepo contentRepo.Repo, timeout time.Duration) (content.Service, error) {
+	idBuilder, err := goSnowFlake.NewIdWorker(443474713)
+	if err != nil {
+		return nil, err
+	}
+	return &contentService{
+		contentRepo:    contentRepo,
 		contextTimeout: timeout,
+		idBuilder: idBuilder,
 	}, nil
 }
