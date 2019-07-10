@@ -17,14 +17,14 @@ import (
 func main() {
 	config, err := configUtils.ReadConfigFromFile("./config", nil)
 	if err != nil {
-		logrus.Errorf("[search-grpc] ReadConfigFromFile err: %s", err.Error())
+		logrus.Errorf("[content-grpc] ReadConfigFromFile err: %s", err.Error())
 		panic(err)
 	}
 
 	instanceAddr := config.Get("grpcService.host").(string) + ":" + config.Get("grpcService.port").(string)
 	listen, err := net.Listen("tcp", instanceAddr)
 	if err != nil {
-		logrus.Errorf("[search-grpc] net.Listen err: %s", err.Error())
+		logrus.Errorf("[content-grpc] net.Listen err: %s", err.Error())
 		panic(err)
 	}
 
@@ -38,25 +38,25 @@ func main() {
 	})
 
 	if err != nil {
-		logrus.Errorf("[search-grpc] db.Connect err: %s", err.Error())
+		logrus.Errorf("[content-grpc] db.Connect err: %s", err.Error())
 		panic(err)
 	}
-	logrus.Printf("[search-grpc] db.Connect finished")
+	logrus.Printf("[content-grpc] db.Connect finished")
 
 	grpcServer := grpc.NewServer()
 	resolver, err := grpcUtils.NewGrpcResolover()
 	if err != nil {
-		logrus.Errorf("[search-grpc] NewGrpcResolover err: %s", err.Error())
+		logrus.Errorf("[content-grpc] NewGrpcResolover err: %s", err.Error())
 		panic(err)
 	}
-	logrus.Printf("[search-grpc] NewGrpcResolover finished")
+	logrus.Printf("[content-grpc] NewGrpcResolover finished")
 
 	err = grpcUtils.ResgiterServer(*resolver, "sundog.search", instanceAddr, 5*time.Second, 5)
 	if err != nil {
-		logrus.Errorf("[search-grpc] RegisterServer err: %s", err.Error())
+		logrus.Errorf("[content-grpc] RegisterServer err: %s", err.Error())
 		panic(err)
 	}
-	logrus.Printf("[search-grpc] ResgiterServer finished, service: %s, %s", "sundog.search", instanceAddr)
+	logrus.Printf("[content-grpc] ResgiterServer finished, service: %s, %s", "sundog.search", instanceAddr)
 
 	contentGen.RegisterContentServiceServer(grpcServer, &content.ContentServiceServer{
 		GormDB: gormDB,

@@ -4,7 +4,7 @@ import (
 	"context"
 	"errors"
 
-	repo "github.com/sundogrd/content-grpc/providers/repos/content"
+	repo "github.com/sundogrd/content-grpc/repositories/content"
 )
 
 func (s contentRepo) List(ctx context.Context, req *repo.ListRequest) (*repo.ListResponse, error) {

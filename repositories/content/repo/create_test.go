@@ -5,7 +5,7 @@ import (
 	"github.com/sundogrd/gopkg/pointer"
 	"testing"
 
-	repo "github.com/sundogrd/content-grpc/providers/repos/content"
+	repo "github.com/sundogrd/content-grpc/repositories/content"
 )
 
 func TestContentProvider_Create(t *testing.T) {

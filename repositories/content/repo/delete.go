@@ -4,7 +4,7 @@ import (
 	"context"
 	"github.com/sirupsen/logrus"
 
-	repo "github.com/sundogrd/content-grpc/providers/repos/content"
+	repo "github.com/sundogrd/content-grpc/repositories/content"
 )
 
 func (r contentRepo) Delete(ctx context.Context, req *repo.DeleteRequest) (*repo.DeleteResponse, error) {

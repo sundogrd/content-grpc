@@ -3,7 +3,7 @@ package repo
 import (
 	"context"
 	"github.com/sirupsen/logrus"
-	repo "github.com/sundogrd/content-grpc/providers/repos/content"
+	repo "github.com/sundogrd/content-grpc/repositories/content"
 )
 
 // 只负责创建

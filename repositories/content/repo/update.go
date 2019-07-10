@@ -3,7 +3,7 @@ package repo
 import (
 	"context"
 	"errors"
-	repo "github.com/sundogrd/content-grpc/providers/repos/content"
+	repo "github.com/sundogrd/content-grpc/repositories/content"
 )
 
 func (r contentRepo) Update(ctx context.Context, req *repo.UpdateRequest) (*repo.UpdateResponse, error) {

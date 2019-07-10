@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	repo "github.com/sundogrd/content-grpc/providers/repos/content"
+	repo "github.com/sundogrd/content-grpc/repositories/content"
 )
 
 func TestCommentProvider_Get(t *testing.T) {

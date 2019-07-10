@@ -4,7 +4,7 @@ import (
 	"time"
 
 	"github.com/jinzhu/gorm"
-	"github.com/sundogrd/comment-grpc/providers/repos/comment"
+	"github.com/sundogrd/content-grpc/repositories/content"
 	"github.com/zheng-ji/goSnowFlake"
 )
 
@@ -15,17 +15,17 @@ type contentRepo struct {
 }
 
 // NewUserService will create new an articleUsecase object representation of article.Usecase interface
-func NewContentRepo(gormDB *gorm.DB, timeout time.Duration) (comment.Repo, error) {
+func NewContentRepo(gormDB *gorm.DB, timeout time.Duration) (content.Repo, error) {
 	idBuilder, err := goSnowFlake.NewIdWorker(3)
 	if err != nil {
 		return nil, err
 	}
 
-	hasTable := gormDB.HasTable(&comment.Comment{})
+	hasTable := gormDB.HasTable(&content.Content{})
 	if hasTable == false {
-		gormDB.CreateTable(&comment.Comment{})
+		gormDB.CreateTable(&content.Content{})
 	} else {
-		gormDB.AutoMigrate(&comment.Comment{})
+		gormDB.AutoMigrate(&content.Content{})
 	}
 
 	repo := contentRepo{

@@ -3,8 +3,8 @@ package repo_test
 import (
 	"time"
 
-	repo "github.com/sundogrd/content-grpc/providers/repos/content"
-	contentRepo "github.com/sundogrd/content-grpc/providers/repos/content/repo"
+	repo "github.com/sundogrd/content-grpc/repositories/content"
+	contentRepo "github.com/sundogrd/content-grpc/repositories/content/repo"
 	"github.com/sundogrd/gopkg/db"
 )
 
