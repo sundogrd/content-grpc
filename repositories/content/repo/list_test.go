@@ -7,13 +7,13 @@ import (
 	repo "github.com/sundogrd/content-grpc/repositories/content"
 )
 
-func TestCommentProvider_List(t *testing.T) {
-	gormDB, err := initTestDB()
+func TestContentRepo_List(t *testing.T) {
+	contentRepo, err := initTestRepo()
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	res, err := gormDB.List(context.Background(), &repo.ListRequest{
+	res, err := contentRepo.List(context.Background(), &repo.ListRequest{
 
 	})
 	if err != nil {

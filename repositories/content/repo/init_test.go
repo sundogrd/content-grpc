@@ -8,7 +8,7 @@ import (
 	"github.com/sundogrd/gopkg/db"
 )
 
-func initTestDB() (repo.Repo, error) {
+func initTestRepo() (repo.Repo, error) {
 
 	gormDB, err := db.Connect(db.ConnectOptions{
 		User:           "sundog",

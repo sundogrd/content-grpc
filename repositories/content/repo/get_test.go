@@ -7,17 +7,17 @@ import (
 	repo "github.com/sundogrd/content-grpc/repositories/content"
 )
 
-func TestCommentProvider_Get(t *testing.T) {
-	comment, err := initTestDB()
+func TestContentRepo_Get(t *testing.T) {
+	contentRepo, err := initTestRepo()
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	res, err := comment.Get(context.Background(), &repo.GetRequest{
-		ContentId: 343087411107999744,
+	res, err := contentRepo.Get(context.Background(), &repo.GetRequest{
+		ContentId: 370631075367497728,
 	})
 	if err != nil {
-		t.Fatalf("GetComment err: %+v", err)
+		t.Fatalf("GetContent err: %+v", err)
 	}
-	t.Logf("GetComment: %+v", res)
+	t.Logf("GetContent: %+v", res.Content)
 }

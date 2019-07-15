@@ -5,7 +5,7 @@ import (
 )
 
 type GetRequest struct {
-	ContentId int64
+	ContentID int64
 }
 type GetResponse struct {
 	Content *Content
@@ -23,7 +23,7 @@ type ListResponse struct {
 }
 
 type CreateRequest struct {
-	AppId   string
+	AppID   string
 	Title   string
 	Description *string
 	AuthorID int64
@@ -35,20 +35,20 @@ type CreateRequest struct {
 
 }
 type CreateResponse struct {
-	AppId   string
+	AppID   string
 	Content *Content
 }
 
 type DeleteRequest struct {
-	ContentId int64
+	ContentID int64
 }
 
 type DeleteResponse struct {
-	ContentId int64
+	ContentID int64
 }
 
 type UpdateRequest struct {
-	ContentId int64
+	ContentID int64
 	Title *string
 	Description *string
 	Category *string
@@ -62,7 +62,7 @@ type UpdateRequest struct {
 type UpdateResponse struct {
 	Content *Content
 }
-
+I
 type Repo interface {
 	Get(ctx context.Context, req *GetRequest) (*GetResponse, error)
 	List(ctx context.Context, req *ListRequest) (*ListResponse, error)

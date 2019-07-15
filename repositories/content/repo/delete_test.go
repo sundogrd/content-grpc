@@ -8,12 +8,12 @@ import (
 )
 
 func TestCommentProvider_Delete(t *testing.T) {
-	gormDB, err := initTestDB()
+	contentRepo, err := initTestRepo()
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	res, err := gormDB.Delete(context.Background(), &repo.DeleteRequest{
+	res, err := contentRepo.Delete(context.Background(), &repo.DeleteRequest{
 		ContentId: 343193762765221888,
 	})
 	if err != nil {

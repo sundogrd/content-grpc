@@ -13,11 +13,11 @@ func (r contentRepo) Get(ctx context.Context, req *repo.GetRequest) (*repo.GetRe
 	db := r.gormDB
 
 	dbc := db.Where(repo.Content{
-		ID: req.ContentId,
+		ContentID: req.ContentId,
 	}).First(&content)
 
 	if dbc.Error != nil {
-		logrus.Errorf("[providers/content] Delete: db get error: %+v", dbc.Error)
+		logrus.Errorf("[repositories/content] Delete: db get error: %+v", dbc.Error)
 		return nil, dbc.Error
 	}
 

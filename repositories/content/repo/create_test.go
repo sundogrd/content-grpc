@@ -9,12 +9,12 @@ import (
 )
 
 func TestContentProvider_Create(t *testing.T) {
-	gormDB, err := initTestDB()
+	contentRepo, err := initTestRepo()
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	res, err := gormDB.Create(context.Background(), &repo.CreateRequest{
+	res, err := contentRepo.Create(context.Background(), &repo.CreateRequest{
 		AppId: "lwio",
 		Title: "test",
 		Description: nil,
