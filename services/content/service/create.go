@@ -7,9 +7,9 @@ import (
 	service "github.com/sundogrd/content-grpc/services/content"
 )
 
-func (s *contentService) CreateContent(ctx context.Context, req *service.CreateRequest) (*service.CreateResponse, error) {
+func (s *contentService) Create(ctx context.Context, req *service.CreateRequest) (*service.CreateResponse, error) {
 
-	repoListResp, err := s.contentRepo.Create(ctx, &contentRepo.CreateRequest{
+	repoCreateResponse, err := s.contentRepo.Create(ctx, &contentRepo.CreateRequest{
 		AppID: req.AppID,
 		Title:   req.Title,
 		Description: req.Description,
@@ -25,12 +25,9 @@ func (s *contentService) CreateContent(ctx context.Context, req *service.CreateR
 		return nil, err
 	}
 
-	res := &service.ListContentResponse{
+	res := &service.CreateResponse{
 		AppID:    req.AppID,
-		Contents: ret,
-		Page:     repoListResp.Page,
-		PageSize: repoListResp.PageSize,
-		Total:    repoListResp.Total,
+		ContentID: repoCreateResponse.Content.ContentID,
 	}
 
 	return res, nil

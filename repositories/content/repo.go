@@ -62,7 +62,7 @@ type UpdateRequest struct {
 type UpdateResponse struct {
 	Content *Content
 }
-I
+
 type Repo interface {
 	Get(ctx context.Context, req *GetRequest) (*GetResponse, error)
 	List(ctx context.Context, req *ListRequest) (*ListResponse, error)

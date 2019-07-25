@@ -57,17 +57,17 @@ type CreateRequest struct {
 
 type CreateResponse struct {
 	AppID   string
-	Comment *models.Comment
+	ContentID int64
 }
 
 type DeleteRequest struct {
 	AppID     string
-	CommentId int64
+	ContentID int64
 }
 
 type DeleteResponse struct {
 	AppID     string
-	CommentId int64
+	ContentID int64
 }
 type Service interface {
 	GetComment(ctx context.Context, req *GetRequest) (*GetResponse, error)
