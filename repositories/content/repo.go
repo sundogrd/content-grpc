@@ -12,11 +12,12 @@ type GetResponse struct {
 }
 
 type ListRequest struct {
-	Page     int32
-	PageSize int32
+	Page     *int32
+	PageSize *int32
+	Query    string
 }
 type ListResponse struct {
-	List     []*Content
+	List     []Content
 	Page     int32
 	PageSize int32
 	Total    int64
@@ -62,7 +63,7 @@ type UpdateRequest struct {
 type UpdateResponse struct {
 	Content *Content
 }
-I
+
 type Repo interface {
 	Get(ctx context.Context, req *GetRequest) (*GetResponse, error)
 	List(ctx context.Context, req *ListRequest) (*ListResponse, error)

@@ -13,7 +13,7 @@ func (r contentRepo) Get(ctx context.Context, req *repo.GetRequest) (*repo.GetRe
 	db := r.gormDB
 
 	dbc := db.Where(repo.Content{
-		ContentID: req.ContentId,
+		ContentID: req.ContentID,
 	}).First(&content)
 
 	if dbc.Error != nil {

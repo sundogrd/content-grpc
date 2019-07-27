@@ -3,39 +3,26 @@ package content
 import (
 	"context"
 	"github.com/sundogrd/content-grpc/repositories/content"
-
-	"github.com/sundogrd/comment-grpc/models"
 )
 
-type ECommentState int32
-
-const (
-	UNKNOWN  ECommentState = 0
-	SHOW     ECommentState = 1
-	WITHDRAW ECommentState = 2
-)
-
-type GetRequest struct {
-	CommentId int64
+type GetContentRequest struct {
+	ContentID int64
 }
-type GetResponse struct {
-	Comment *models.Comment
+type GetContentResponse struct {
+	Content *Content
 }
 
-type ListContentRequest struct {
+type ListContentsRequest struct {
 	AppID       string
 	TargetId    int64
 	Page        int32
 	PageSize    int32
 	CreatorId   int64
 	ParentId    int64
-	State       int32
-	StartTime   uint32
-	EndTime     uint32
-	ReCommentId int64
+	State       content.ContentState
 }
 
-type ListContentResponse struct {
+type ListContentsResponse struct {
 	AppID    string
 	Contents []*Content
 	Total    int64
@@ -43,7 +30,7 @@ type ListContentResponse struct {
 	PageSize int32
 }
 
-type CreateRequest struct {
+type CreateContentRequest struct {
 	AppID        string
 	Title   string
 	Description *string
@@ -55,23 +42,23 @@ type CreateRequest struct {
 	Extra    map[string]interface{}
 }
 
-type CreateResponse struct {
+type CreateContentResponse struct {
 	AppID   string
-	Comment *models.Comment
+	Content *Content
 }
 
-type DeleteRequest struct {
+type DeleteContentRequest struct {
 	AppID     string
-	CommentId int64
+	ContentID int64
 }
 
 type DeleteResponse struct {
 	AppID     string
-	CommentId int64
+	ContentID int64
 }
 type Service interface {
-	GetComment(ctx context.Context, req *GetRequest) (*GetResponse, error)
-	ListComments(ctx context.Context, req *ListContentRequest) (*ListContentResponse, error)
-	CreateComment(ctx context.Context, req *CreateRequest) (*CreateResponse, error)
-	DeleteComment(ctx context.Context, req *DeleteRequest) (*DeleteResponse, error)
+	GetContent(ctx context.Context, req *GetContentRequest) (*GetContentResponse, error)
+	ListContents(ctx context.Context, req *ListContentsRequest) (*ListContentsResponse, error)
+	CreateContent(ctx context.Context, req *CreateContentRequest) (*CreateContentResponse, error)
+	DeleteContent(ctx context.Context, req *DeleteContentRequest) (*DeleteResponse, error)
 }

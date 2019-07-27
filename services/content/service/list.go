@@ -7,7 +7,7 @@ import (
 	service "github.com/sundogrd/content-grpc/services/content"
 )
 
-func (s *contentService) ListContent(ctx context.Context, req *service.ListContentRequest) (*service.ListContentResponse, error) {
+func (s *contentService) ListContent(ctx context.Context, req *service.ListContentsRequest) (*service.ListContentsResponse, error) {
 	page := int32(1)
 	pageSize := int32(10)
 	if req.Page != 0 {
@@ -18,8 +18,8 @@ func (s *contentService) ListContent(ctx context.Context, req *service.ListConte
 	}
 
 	repoListResp, err := s.contentRepo.List(ctx, &contentRepo.ListRequest{
-		Page:     int32(page),
-		PageSize: int32(pageSize),
+		Page:     &page,
+		PageSize: &pageSize,
 	})
 	if err != nil {
 		logrus.Errorf("[service/comment] List: list errored: %+v", err)
@@ -45,7 +45,7 @@ func (s *contentService) ListContent(ctx context.Context, req *service.ListConte
 		})
 	}
 
-	res := &service.ListContentResponse{
+	res := &service.ListContentsResponse{
 		AppID:    req.AppID,
 		Contents: ret,
 		Page:     repoListResp.Page,

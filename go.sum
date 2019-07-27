@@ -36,7 +36,6 @@ github.com/dgrijalva/jwt-go v3.2.0+incompatible/go.mod h1:E3ru+11k8xSBh+hMPgOLZm
 github.com/eapache/go-resiliency v1.1.0/go.mod h1:kFI+JgMyC7bLPUVY133qvEBtVayf5mFgVsvEsIPBvNs=
 github.com/eapache/go-xerial-snappy v0.0.0-20180814174437-776d5712da21/go.mod h1:+020luEh2TKB4/GOp8oxxtq0Daoen/Cii55CzbTV6DU=
 github.com/eapache/queue v1.1.0/go.mod h1:6eCeP0CKFpHLu8blIFXhExK/dRa7WDZfr6jVFPTqq+I=
-github.com/elastic/go-elasticsearch/v7 v7.0.0/go.mod h1:OJ4wdbtDNk5g503kvlHLyErCgQwwzmDtaFC4XyOxXA4=
 github.com/erikstmartin/go-testdb v0.0.0-20160219214506-8d10e4a1bae5 h1:Yzb9+7DPaBjB8zlTR87/ElzFsnQfuHnVUVqpZZIcV5Y=
 github.com/erikstmartin/go-testdb v0.0.0-20160219214506-8d10e4a1bae5/go.mod h1:a2zkGnVExMxdzMo3M0Hi/3sEU+cWnZpSni0O6/Yb/P0=
 github.com/fsnotify/fsnotify v1.4.7/go.mod h1:jwhsz4b93w/PPRr/qN1Yymfu8t87LnFCMoQvtojpjFo=
@@ -101,6 +100,8 @@ github.com/kr/text v0.1.0 h1:45sCR5RtlFHMR4UwH9sdQ5TC8v0qDQCHnXt+kaKSTVE=
 github.com/kr/text v0.1.0/go.mod h1:4Jbv+DJW3UT/LiOwJeYQe1efqtUx/iVham/4vfdArNI=
 github.com/lib/pq v1.1.0 h1:/5u4a+KGJptBRqGzPvYQL9p0d/tPR4S31+Tnzj9lEO4=
 github.com/lib/pq v1.1.0/go.mod h1:5WUZQaWbwv1U+lTReE5YruASi9Al49XbQIvNi/34Woo=
+github.com/lwyj123/qsearch v0.0.0-20190727091756-495ba620dd1c h1:r/lXooruwm2OxEWU9aVtzcKbuOL6w5Bml5v8BgyuCrQ=
+github.com/lwyj123/qsearch v0.0.0-20190727091756-495ba620dd1c/go.mod h1:UdXC+W9ytgFXm6NddXpE3IdH0BRjIS/EC6q0HF7Qhlc=
 github.com/mattn/go-isatty v0.0.7/go.mod h1:Iq45c/XA43vh69/j3iqttzPXn0bhXyGjM0Hdxcsrc5s=
 github.com/mattn/go-sqlite3 v1.10.0 h1:jbhqpg7tQe4SupckyijYiy0mJJ/pRyHvXf7JdWK860o=
 github.com/mattn/go-sqlite3 v1.10.0/go.mod h1:FPy6KqzDD04eiIsT53CuJW3U88zkxoIYsOqkbpncsNc=
@@ -145,8 +146,6 @@ github.com/sundogrd/comment-grpc v0.0.0-20190522130208-fd5a34516cdb h1:rlvNa6vgA
 github.com/sundogrd/comment-grpc v0.0.0-20190522130208-fd5a34516cdb/go.mod h1:nGp3LpSQwqbmyG0jMprCakeir5UD/FbUTfoVxjz7i54=
 github.com/sundogrd/gopkg v0.0.0-20190503104757-4333365a52f6 h1:mefbjQJcRxH6hWokIn6K7eEWGEJUcfxjYLdGkdXNX7g=
 github.com/sundogrd/gopkg v0.0.0-20190503104757-4333365a52f6/go.mod h1:2+opC55EJrPt3xMrSufKuO5HnMAYGpGprdQyMfLXBSI=
-github.com/sundogrd/search-grpc v0.0.0-20190521093203-73996f190446 h1:e93P08ruHt26cMhW/aeasj370rLNSDrvGj1lB8T6KYY=
-github.com/sundogrd/search-grpc v0.0.0-20190521093203-73996f190446/go.mod h1:Q0ZsJZKDvdknS2ELNCOKMLBN5xEoobN58FkXnhzMcoY=
 github.com/ugorji/go v1.1.2-0.20180831062425-e253f1f20942 h1:C/c80f5WTivlgVJaxjYkGosvyNLVlehHXvTwubC5AnY=
 github.com/ugorji/go v1.1.2-0.20180831062425-e253f1f20942/go.mod h1:hnLbHMwcvSihnDhEfx2/BzKp2xb0Y+ErdfYcrs9tkJQ=
 github.com/ugorji/go v1.1.4 h1:j4s+tAvLfL3bZyefP2SEWmhBzmuIlH/eqNuPdFPgngw=

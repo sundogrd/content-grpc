@@ -15,12 +15,12 @@ func TestContentProvider_Create(t *testing.T) {
 	}
 
 	res, err := contentRepo.Create(context.Background(), &repo.CreateRequest{
-		AppId: "lwio",
+		AppID: "lwio",
 		Title: "test",
 		Description: nil,
 		AuthorID: 443474713,
 		Category: nil,
-		Type: (*repo.ContentType)(pointer.Int16(int16(repo.TYPE_RICHTEXT))),
+		Type: &repo.TYPE_RICHTEXT,
 		Body: "#worinima",
 		BodyType: (*repo.ContentBodyType)(pointer.Int16(int16(repo.BODY_TYPE_MARKDOWN))),
 		Extra:    map[string]interface{}{

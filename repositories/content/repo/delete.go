@@ -11,17 +11,17 @@ func (r contentRepo) Delete(ctx context.Context, req *repo.DeleteRequest) (*repo
 	db := r.gormDB
 
 	var content repo.Content
-	db.Where("content_id = ?", req.ContentId).First(&content)
+	db.Where("content_id = ?", req.ContentID).First(&content)
 
 	content.State = repo.STATE_DELETED
 
 	if dbc := db.Save(&content); dbc.Error != nil {
-		logrus.Errorf("[providers/comment] Delete: db delete error: %+v", dbc.Error)
+		logrus.Errorf("[repository/content] Delete: db delete error: %+v", dbc.Error)
 		return nil, dbc.Error
 	}
 
 	res := &repo.DeleteResponse{
-		ContentId: req.ContentId,
+		ContentID: req.ContentID,
 	}
 
 	return res, nil

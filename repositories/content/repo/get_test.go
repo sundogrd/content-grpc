@@ -14,7 +14,7 @@ func TestContentRepo_Get(t *testing.T) {
 	}
 
 	res, err := contentRepo.Get(context.Background(), &repo.GetRequest{
-		ContentId: 370631075367497728,
+		ContentID: 370631075367497728,
 	})
 	if err != nil {
 		t.Fatalf("GetContent err: %+v", err)

@@ -38,7 +38,7 @@ func (r contentRepo) Create(ctx context.Context, req *repo.CreateRequest) (*repo
 	}
 
 	content := repo.Content{
-		AppID: req.AppId,
+		AppID: req.AppID,
 		ContentID:   contentID,
 		Title:       req.Title,
 		Description: contentDescription,
@@ -57,7 +57,7 @@ func (r contentRepo) Create(ctx context.Context, req *repo.CreateRequest) (*repo
 	}
 
 	return &repo.CreateResponse{
-		AppId: req.AppId,
+		AppID: req.AppID,
 		Content: &content,
 	}, nil
 }

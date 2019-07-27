@@ -14,7 +14,7 @@ func TestCommentProvider_Delete(t *testing.T) {
 	}
 
 	res, err := contentRepo.Delete(context.Background(), &repo.DeleteRequest{
-		ContentId: 343193762765221888,
+		ContentID: 375036330725355520,
 	})
 	if err != nil {
 		t.Fatalf("DeleteComment err: %+v", err)

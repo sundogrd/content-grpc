@@ -2,56 +2,112 @@ package repo
 
 import (
 	"context"
-	"errors"
+	"github.com/lwyj123/qsearch"
+	"github.com/sirupsen/logrus"
+	"strconv"
 
 	repo "github.com/sundogrd/content-grpc/repositories/content"
 )
 
-func (s contentRepo) List(ctx context.Context, req *repo.ListRequest) (*repo.ListResponse, error) {
-	//var page int16 = 1
-	//var pageSize int16 = 10
-	//if req.Page != nil {
-	//	page = *req.Page
-	//}
-	//if req.PageSize != nil {
-	//	pageSize = *req.PageSize
-	//}
+
+type listContentQuery struct {
+	ContentIDs    *[]int64
+	Title         *string
+	State         *repo.ContentState
+	AuthorID      *int64
+}
+
+func parseQuery(qs string) (*listContentQuery, error) {
+	if qs == "" {
+		return &listContentQuery{}, nil
+	}
+	var result listContentQuery
+	contentIDs := make([]int64, 0)
+	queryString := qsearch.NewQueryStringQuery(qs)
+	q, err := queryString.Parse()
+	if err != nil {
+		return nil, err
+	}
+	for _, queryItem := range q.(*qsearch.BooleanQuery).Should.(*qsearch.DisjunctionQuery).Disjuncts {
+		switch queryType := queryItem.(type) {
+		case *qsearch.MatchQuery:
+			logrus.Debugf("match MatchQuery %#v", queryType)
+			if queryType.Field() == "" {
+				result.Title = &queryType.Match
+			} else if queryType.Field() == "content_id" {
+				contentIDNum, err := strconv.ParseInt(queryType.Match, 10, 64)
+				if err != nil {
+					return nil, err
+				}
+				contentIDs = append(contentIDs, contentIDNum)
+			} else if queryType.Field() == "state" {
+				state, err := strconv.ParseInt(queryType.Match, 10, 16)
+				if err != nil {
+					return nil, err
+				}
+				contentState := repo.ContentState(state)
+				result.State = &contentState
+			} else if queryType.Field() == "author_id" {
+				authorIDNum, err := strconv.ParseInt(queryType.Match, 10, 64)
+				if err != nil {
+					return nil, err
+				}
+				result.AuthorID = &authorIDNum
+			}
+		default:
+			logrus.Debugf("not match %#v", queryType)
+		}
+	}
+	if len(contentIDs) != 0 {
+		result.ContentIDs = &contentIDs
+	}
+	return &result, nil
+}
+
+func (r contentRepo) List(ctx context.Context, req *repo.ListRequest) (*repo.ListResponse, error) {
+	//queryString := qsearch.NewQueryStringQuery("title:科科 content_id:30214120512 state:3")
+	query, err := parseQuery(req.Query)
+	if err != nil {
+		return nil, err
+	}
+
+	var page int32 = 1
+	var pageSize int32 = 10
+	if req.Page != nil {
+		page = *req.Page
+	}
+	if req.PageSize != nil {
+		pageSize = *req.PageSize
+	}
 	//
-	//contents := make([]SDContent, 0)
-	//count := int64(0)
+	contents := make([]repo.Content, 0)
+	count := int64(0)
 	//
-	//db := cs.db
-	//if req.ContentIDs != nil && len(*req.ContentIDs) != 0 {
-	//	db = db.Where("content_id in (?)", *req.ContentIDs)
-	//}
-	//if req.Title != nil {
-	//	db = db.Where("title LIKE ?", "%"+*req.Title+"%")
-	//}
-	//if req.AuthorID != nil {
-	//	db = db.Where("author_id = ", *req.AuthorID)
-	//}
+	db := r.gormDB
+	if query.ContentIDs != nil && len(*query.ContentIDs) != 0 {
+		db = db.Where("content_id in (?)", *query.ContentIDs)
+	}
+	if query.Title != nil {
+		db = db.Where("title LIKE ?", "%" + *query.Title + "%")
+	}
+	if query.AuthorID != nil {
+		db = db.Where("author_id = ", *query.AuthorID)
+	}
 	//if req.Type != nil {
 	//	db = db.Where("type = ?", *req.Type)
 	//}
-	//if req.Status != nil {
-	//	db = db.Where("status = ?", *req.Status)
-	//}
-	//db.Limit(pageSize).Offset((page - 1) * (pageSize))
-	//if err := db.Find(&contents).Offset(0).Limit(-1).Count(&count).Error; err != nil {
-	//	return nil, err
-	//} else {
-	//	BaseInfos := make([]BaseInfo, 0)
-	//	for _, v := range contents {
-	//		BaseInfos = append(BaseInfos, packBaseInfo(v))
-	//	}
-	//	res := &FindResponse{
-	//		List:  BaseInfos,
-	//		Total: count,
-	//	}
-	//	return res, nil
-	//}
-
-	//return res, nil
-
-	return nil, errors.New("not implemented")
+	if query.State != nil {
+		db = db.Where("state = ?", *query.State)
+	}
+	db.Limit(pageSize).Offset((page - 1) * (pageSize))
+	if err := db.Find(&contents).Offset(0).Limit(-1).Count(&count).Error; err != nil {
+		return nil, err
+	} else {
+		return &repo.ListResponse{
+			List: contents,
+			Page: page,
+			PageSize: pageSize,
+			Total: count,
+		}, nil
+	}
 }

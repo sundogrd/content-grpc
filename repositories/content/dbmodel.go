@@ -20,14 +20,14 @@ const (
 type ContentType int16
 
 // ...
-const (
+var (
 	TYPE_UNKNOWN_STATE ContentType = 0
 	TYPE_RICHTEXT      ContentType = 1
 )
 
 type ContentState int16
 
-const (
+var (
 	STATE_UNKNOWN_STATE ContentState = 0
 	STATE_DRAFT         ContentState = 1
 	STATE_CHECKING      ContentState = 2
@@ -45,10 +45,10 @@ type Content struct {
 	Description string          `gorm:"type:varchar(300);not null"`
 	AuthorID    int64           `gorm:"not null;"`
 	Category    string          `gorm:"type:varchar(60)"`
-	Type        ContentType     `gorm:"type:TINYINT;NOT NULL"`
+	Type        ContentType     `gorm:"type:INT;NOT NULL"`
 	Body        string          `gorm:"type:TEXT;NOT NULL"`
-	BodyType    ContentBodyType `gorm:"type:TINYINT;NOT NULL;DEFAULT:1"`
-	State       ContentState    `gorm:"type:TINYINT;NOT NULL;DEFAULT:10"`
+	BodyType    ContentBodyType `gorm:"type:INT;NOT NULL;DEFAULT:1"`
+	State       ContentState    `gorm:"type:INT;NOT NULL;DEFAULT:10"`
 	CreatedAt   time.Time       `gorm:"DEFAULT:CURRENT_TIMESTAMP;NOT NULL"`
 	UpdatedAt   time.Time       `gorm:""`
 	Extra       string          `gorm:"type:TEXT;"`
