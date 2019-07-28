@@ -1,0 +1,23 @@
+language: go
+go:
+- 1.11.x
+env:
+- PATH=$HOME/protoc/bin:$PATH
+before_install:
+- openssl aes-256-cbc -K $encrypted_4e0cc4f50b4d_key -iv $encrypted_4e0cc4f50b4d_iv
+  -in id_rsa.enc -out ./id_rsa -d
+- export GO111MODULE=on
+install: 
+script: 
+branches: 
+only:
+- master
+"-after_success":
+- chmod 600 ~/.ssh/id_rsa
+- docker login -u="$DOCKER_NAME" -p="$DOCKER_PWD"
+- docker build -t sundog/content-grpc:$TRAVIS_BRANCH-$TRAVIS_BUILD_ID .
+- docker push sundog/content-grpc:$TRAVIS_BRANCH-$TRAVIS_BUILD_ID
+- ssh root@118.25.150.3 -o StrictHostKeyChecking=no 'cd ~/workspace && test ! -f content-grpc/devops/deploy.sh
+  && (git clone https://github.com/sundogrd/content-grpc.git ) || (cd content-grpc
+  && git pull) && cd content-grpc/comment-grpc/devops && sh deploy.sh' $TRAVIS_BRANCH
+  $TRAVIS_BUILD_ID
