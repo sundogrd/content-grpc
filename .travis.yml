@@ -7,12 +7,7 @@ before_install:
 - openssl aes-256-cbc -K $encrypted_4e0cc4f50b4d_key -iv $encrypted_4e0cc4f50b4d_iv
   -in id_rsa.enc -out ./id_rsa -d
 - export GO111MODULE=on
-install: 
-script: 
-branches: 
-only:
-- master
-"-after_success":
+after_success:
 - chmod 600 ~/.ssh/id_rsa
 - docker login -u="$DOCKER_NAME" -p="$DOCKER_PWD"
 - docker build -t sundog/content-grpc:$TRAVIS_BRANCH-$TRAVIS_BUILD_ID .
