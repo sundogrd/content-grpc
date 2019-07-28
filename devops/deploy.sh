@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-git pull
-
 if docker images | grep -q  sundogrd/content-grpc; then
     docker rmi -f `docker images | grep sundogrd/content-grpc | awk '{print $3}'`
 fi
