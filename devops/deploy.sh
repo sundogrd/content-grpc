@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+git pull && git checkout master && git branch | grep -v "master" | xargs git branch -D 
+
+git checkout -b $1 origin/$1
 
 if docker images | grep -q  sundogrd/content-grpc; then
     docker rmi -f `docker images | grep sundogrd/content-grpc | awk '{print $3}'`
