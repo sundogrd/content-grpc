@@ -5,21 +5,26 @@
   "db": {
     "type": "mysql",
     "options": {
-      "user": "Your User Name",
+      "user": "Your Username",
       "password": "Your Password",
-      "host": "Your Host",
+      "host": "host.docker.internal",
       "port": 3306,
-      "dbname": "Your DB Name",
+      "dbname": "sundog",
       "connectTimeout": "10s"
     }
   },
   "redis": {
-    "host": "Your Host",
+    "host": "host.docker.internal",
     "port": 6379,
     "password": ""
   },
   "grpcService": {
     "host": "localhost",
-    "port": "24952"
+    "port": "25555"
+  },
+  "etcd": {
+    "host": "host.docker.internal",
+    "port": "2379",
+    "serverName": "sundog.content"
   }
 }

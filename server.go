@@ -1,9 +1,10 @@
 package main
 
 import (
-	"github.com/sirupsen/logrus"
 	"net"
 	"time"
+
+	"github.com/sirupsen/logrus"
 
 	contentGen "github.com/sundogrd/content-grpc/grpc_gen/content"
 	"github.com/sundogrd/content-grpc/servers/content"
@@ -44,19 +45,24 @@ func main() {
 	logrus.Printf("[content-grpc] db.Connect finished")
 
 	grpcServer := grpc.NewServer()
-	resolver, err := grpcUtils.NewGrpcResolover()
+
+	endpoints := config.Get("etcd.host").(string) + ":" + config.Get("etcd.port").(string)
+	logrus.Printf("etcd config is %s", endpoints)
+
+	resolver, err := grpcUtils.NewGrpcResolover(endpoints)
 	if err != nil {
 		logrus.Errorf("[content-grpc] NewGrpcResolover err: %s", err.Error())
 		panic(err)
 	}
 	logrus.Printf("[content-grpc] NewGrpcResolover finished")
 
-	err = grpcUtils.ResgiterServer(*resolver, "sundog.search", instanceAddr, 5*time.Second, 5)
+	serverName := config.Get("etcd.serverName").(string)
+	err = grpcUtils.ResgiterServer(*resolver, serverName, instanceAddr, 5*time.Second, 5)
 	if err != nil {
 		logrus.Errorf("[content-grpc] RegisterServer err: %s", err.Error())
 		panic(err)
 	}
-	logrus.Printf("[content-grpc] ResgiterServer finished, service: %s, %s", "sundog.search", instanceAddr)
+	logrus.Printf("[content-grpc] ResgiterServer finished, service: %s, %s", serverName, instanceAddr)
 
 	contentGen.RegisterContentServiceServer(grpcServer, &content.ContentServiceServer{
 		GormDB: gormDB,
