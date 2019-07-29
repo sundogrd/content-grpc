@@ -12,7 +12,7 @@ script:
 after_success:
 - chmod 600 ~/.ssh/id_rsa
 - docker login -u="$DOCKER_NAME" -p="$DOCKER_PWD"
-- docker build -t sundogrd/content-grpc:$TRAVIS_BRANCH-$TRAVIS_BUILD_ID .
+- docker build -t sundogrd/content-grpc:$TRAVIS_BRANCH-$TRAVIS_BUILD_ID  --build-arg DB_USER=$DB_USER --build-arg DB_PWD=$DB_PWD .
 - docker push sundogrd/content-grpc:$TRAVIS_BRANCH-$TRAVIS_BUILD_ID
 - ssh root@118.25.150.3 -o StrictHostKeyChecking=no 'cd ~/workspace && test ! -f content-grpc/devops/deploy.sh
   && (rm -rf content-grpc && git clone https://github.com/sundogrd/content-grpc.git ) || echo 'continue' && cd content-grpc
