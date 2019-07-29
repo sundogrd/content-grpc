@@ -8,8 +8,8 @@ require (
 	github.com/lwyj123/qsearch v0.0.0-20190727091756-495ba620dd1c
 	github.com/pkg/errors v0.8.0
 	github.com/sirupsen/logrus v1.4.1
-	github.com/sundogrd/gopkg v0.0.0-20190620103953-0f12671eb3ca
-	github.com/ugorji/go v1.1.4 // indirect
+	github.com/spf13/viper v1.4.0 // indirect
+	github.com/sundogrd/gopkg v0.0.0-20190729051838-f3f25f960f18
 	github.com/zheng-ji/goSnowFlake v0.0.0-20180906112711-fc763800eec9
-	google.golang.org/grpc v1.20.1
+	google.golang.org/grpc v1.21.0
 )

@@ -16,7 +16,7 @@ import (
 )
 
 func main() {
-	config, err := configUtils.ReadConfigFromFile("./config", nil)
+	config, err := configUtils.Load("./config", "service.config")
 	if err != nil {
 		logrus.Errorf("[content-grpc] ReadConfigFromFile err: %s", err.Error())
 		panic(err)
@@ -33,7 +33,7 @@ func main() {
 		User:           config.Get("db.options.user").(string),
 		Password:       config.Get("db.options.password").(string),
 		Host:           config.Get("db.options.host").(string),
-		Port:           config.Get("db.options.port").(string),
+		Port:           int16(config.Get("db.options.port").(float64)),
 		DBName:         config.Get("db.options.dbname").(string),
 		ConnectTimeout: config.Get("db.options.connectTimeout").(string),
 	})

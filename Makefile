@@ -1,4 +1,4 @@
-GONAME=music-grpc
+GONAME=content-grpc
 
 default: build
 
