@@ -17,7 +17,7 @@ type ListRequest struct {
 	Query    string
 }
 type ListResponse struct {
-	List     []Content
+	List     []*Content
 	Page     int32
 	PageSize int32
 	Total    int64

@@ -1,25 +1,25 @@
 package content_test
 
-//import (
-//	"context"
-//	"fmt"
-//	searchGen "github.com/sundogrd/search-grpc/grpc_gen/search"
-//	"testing"
-//)
-//
-//func TestSearchServer_AddIndex(t *testing.T) {
-//	server, err := newTestSearchServer()
-//	if err != nil {
-//		t.Fatal(err)
-//	}
-//	fmt.Println("测试开始运行.....")
-//	res, err := server.AddIndex(context.Background(), &searchGen.AddIndexRequest{
-//		AppId:     "lwio",
-//		IndexName: "test",
-//		IndexJson: "{}",
-//	})
-//	if err != nil {
-//		t.Fatal(err)
-//	}
-//	t.Logf("AddIndex: %+v", res)
-//}
+import (
+	"context"
+	"fmt"
+	"github.com/sundogrd/content-grpc/grpc_gen/content"
+	"testing"
+)
+
+func TestContentServer_ListContents(t *testing.T) {
+	server, err := newTestContentServer()
+	if err != nil {
+		t.Fatal(err)
+	}
+	fmt.Println("测试开始运行.....")
+	res, err := server.ListContents(context.Background(), &content.ListContentsRequest{
+		AppId:     "lwio",
+		Page: 1,
+		PageSize: 10,
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Logf("ListContents: %+v", res)
+}

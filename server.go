@@ -1,6 +1,8 @@
 package main
 
 import (
+	"github.com/sundogrd/content-grpc/repositories/content/repo"
+	"google.golang.org/grpc/keepalive"
 	"net"
 	"time"
 
@@ -44,7 +46,17 @@ func main() {
 	}
 	logrus.Printf("[content-grpc] db.Connect finished")
 
-	grpcServer := grpc.NewServer()
+	contentRepo, err := repo.NewContentRepo(gormDB, 2 * time.Second)
+	if err != nil {
+		logrus.Errorf("[content-grpc] NewContentRepo err=%s", err.Error())
+		panic(err)
+	}
+
+	grpcServer := grpc.NewServer(
+		grpc.KeepaliveParams(keepalive.ServerParameters{
+			MaxConnectionIdle: 1 * time.Minute,           // <--- This fixes it!
+		}),
+	)
 
 	endpoints := config.Get("etcd.host").(string) + ":" + config.Get("etcd.port").(string)
 	logrus.Printf("etcd config is %s", endpoints)
@@ -66,6 +78,7 @@ func main() {
 
 	contentGen.RegisterContentServiceServer(grpcServer, &content.ContentServiceServer{
 		GormDB: gormDB,
+		ContentRepo: contentRepo,
 	})
 	reflection.Register(grpcServer)
 	grpcServer.Serve(listen)

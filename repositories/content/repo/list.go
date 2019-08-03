@@ -80,7 +80,7 @@ func (r contentRepo) List(ctx context.Context, req *repo.ListRequest) (*repo.Lis
 		pageSize = *req.PageSize
 	}
 	//
-	contents := make([]repo.Content, 0)
+	contents := make([]*repo.Content, 0)
 	count := int64(0)
 	//
 	db := r.gormDB
