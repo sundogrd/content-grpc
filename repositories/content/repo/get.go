@@ -3,16 +3,17 @@ package repo
 import (
 	"context"
 	"github.com/sirupsen/logrus"
+	"github.com/sundogrd/content-grpc/repositories"
 
 	repo "github.com/sundogrd/content-grpc/repositories/content"
 )
 
 func (r contentRepo) Get(ctx context.Context, req *repo.GetRequest) (*repo.GetResponse, error) {
 
-	var content repo.Content
+	var content repositories.Content
 	db := r.gormDB
 
-	dbc := db.Where(repo.Content{
+	dbc := db.Where(repositories.Content{
 		ContentID: req.ContentID,
 	}).First(&content)
 

@@ -3,6 +3,7 @@ package repo
 import (
 	"context"
 	"github.com/sirupsen/logrus"
+	"github.com/sundogrd/content-grpc/repositories"
 	repo "github.com/sundogrd/content-grpc/repositories/content"
 )
 
@@ -15,7 +16,7 @@ func (r contentRepo) Create(ctx context.Context, req *repo.CreateRequest) (*repo
 	contentID, _ := r.idBuilder.NextId()
 
 	// 支持通过Status创建，默认为Published
-	contentState := repo.STATE_PUBLISHED
+	contentState := repositories.STATE_PUBLISHED
 
 	contentDescription := ""
 	if req.Description != nil {
@@ -27,17 +28,17 @@ func (r contentRepo) Create(ctx context.Context, req *repo.CreateRequest) (*repo
 		contentCategory = *req.Category
 	}
 
-	contentType := repo.TYPE_RICHTEXT
+	contentType := repositories.TYPE_RICHTEXT
 	if req.Type != nil {
 		contentType = *req.Type
 	}
 
-	contentBodyType := repo.BODY_TYPE_HTML
+	contentBodyType := repositories.BODY_TYPE_HTML
 	if req.BodyType != nil {
 		contentBodyType = *req.BodyType
 	}
 
-	content := repo.Content{
+	content := repositories.Content{
 		AppID: req.AppID,
 		ContentID:   contentID,
 		Title:       req.Title,

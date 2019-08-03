@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/lwyj123/qsearch"
 	"github.com/sirupsen/logrus"
+	"github.com/sundogrd/content-grpc/repositories"
 	"strconv"
 
 	repo "github.com/sundogrd/content-grpc/repositories/content"
@@ -11,9 +12,10 @@ import (
 
 
 type listContentQuery struct {
+	AppID         *string
 	ContentIDs    *[]int64
 	Title         *string
-	State         *repo.ContentState
+	State         *repositories.ContentState
 	AuthorID      *int64
 }
 
@@ -45,7 +47,7 @@ func parseQuery(qs string) (*listContentQuery, error) {
 				if err != nil {
 					return nil, err
 				}
-				contentState := repo.ContentState(state)
+				contentState := repositories.ContentState(state)
 				result.State = &contentState
 			} else if queryType.Field() == "author_id" {
 				authorIDNum, err := strconv.ParseInt(queryType.Match, 10, 64)
@@ -80,7 +82,7 @@ func (r contentRepo) List(ctx context.Context, req *repo.ListRequest) (*repo.Lis
 		pageSize = *req.PageSize
 	}
 	//
-	contents := make([]*repo.Content, 0)
+	contents := make([]*repositories.Content, 0)
 	count := int64(0)
 	//
 	db := r.gormDB

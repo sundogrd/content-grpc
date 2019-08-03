@@ -1,4 +1,4 @@
-package content
+package repositories
 
 import (
 	"time"
@@ -52,8 +52,4 @@ type Content struct {
 	CreatedAt   time.Time       `gorm:"DEFAULT:CURRENT_TIMESTAMP;NOT NULL"`
 	UpdatedAt   time.Time       `gorm:""`
 	Extra       string          `gorm:"type:TEXT;"`
-}
-
-func (*Content) TableName() string {
-	return "sd_contents"
 }

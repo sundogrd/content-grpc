@@ -4,10 +4,11 @@ import (
 	"context"
 	"github.com/sirupsen/logrus"
 	"github.com/sundogrd/content-grpc/grpc_gen/content"
+	"github.com/sundogrd/content-grpc/repositories"
 	contentrepo "github.com/sundogrd/content-grpc/repositories/content"
 )
 
-func packContent(repoContent *contentrepo.Content) (*content.Content, error) {
+func packContent(repoContent *repositories.Content) (*content.Content, error) {
 	return &content.Content{
 		ContentId: repoContent.ContentID,
 		AppId: repoContent.AppID,

@@ -1,6 +1,7 @@
 package repo
 
 import (
+	"github.com/sundogrd/content-grpc/repositories"
 	"time"
 
 	"github.com/jinzhu/gorm"
@@ -21,11 +22,11 @@ func NewContentRepo(gormDB *gorm.DB, timeout time.Duration) (content.Repo, error
 		return nil, err
 	}
 
-	hasTable := gormDB.HasTable(&content.Content{})
+	hasTable := gormDB.HasTable(&repositories.Content{})
 	if hasTable == false {
-		gormDB.CreateTable(&content.Content{})
+		gormDB.CreateTable(&repositories.Content{})
 	} else {
-		gormDB.AutoMigrate(&content.Content{})
+		gormDB.AutoMigrate(&repositories.Content{})
 	}
 
 	repo := contentRepo{

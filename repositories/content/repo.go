@@ -2,13 +2,14 @@ package content
 
 import (
 	"context"
+	"github.com/sundogrd/content-grpc/repositories"
 )
 
 type GetRequest struct {
 	ContentID int64
 }
 type GetResponse struct {
-	Content *Content
+	Content *repositories.Content
 }
 
 type ListRequest struct {
@@ -17,7 +18,7 @@ type ListRequest struct {
 	Query    string
 }
 type ListResponse struct {
-	List     []*Content
+	List     []*repositories.Content
 	Page     int32
 	PageSize int32
 	Total    int64
@@ -29,15 +30,15 @@ type CreateRequest struct {
 	Description *string
 	AuthorID int64
 	Category *string
-	Type     *ContentType
+	Type     *repositories.ContentType
 	Body     string
-	BodyType *ContentBodyType
+	BodyType *repositories.ContentBodyType
 	Extra    map[string]interface{}
 
 }
 type CreateResponse struct {
 	AppID   string
-	Content *Content
+	Content *repositories.Content
 }
 
 type DeleteRequest struct {
@@ -53,15 +54,15 @@ type UpdateRequest struct {
 	Title *string
 	Description *string
 	Category *string
-	State *ContentState
-	Type *ContentType
+	State *repositories.ContentState
+	Type *repositories.ContentType
 	Body *string
-	BodyType *ContentBodyType
+	BodyType *repositories.ContentBodyType
 	Extra *string
 }
 
 type UpdateResponse struct {
-	Content *Content
+	Content *repositories.Content
 }
 
 type Repo interface {
